@@ -84,7 +84,6 @@ class EvolutionaryAlgorithm:
             self.P=PDash
             self.Pscript=[]
             self.Pscript=pdashscripts
-            print("GO TO NEXT GENERATION.....")
         self.evaluate()
         self.getLargestFitness()
 
@@ -170,7 +169,7 @@ class EvolutionaryAlgorithm:
 
         self.fitness_list=np.subtract(self.victories_list,self.loss_list)
         print("Fitness Result " + str(self.fitness_list))
-        #self.plotgraph()
+        #self.plotgraph()  
         self.clearpycache()
         self.remove_unused_rules()
         for i in range(len(self.Pscript)):
@@ -277,7 +276,6 @@ class EvolutionaryAlgorithm:
             print(str(obj))
             countercalls=self.P[i].get_counter_calls()
             lengthofCounter=len(countercalls)
-            print("lengthofCounter" +str(lengthofCounter))
             if lengthofRules== lengthofCounter:
                 for j in range(0,lengthofCounter):
                     r=rules[j]
@@ -306,13 +304,13 @@ class EvolutionaryAlgorithm:
         X=[]
         Y=[]
         tempFitness=self.fitness_list
-        arrsum=np.sum(tempFitness, dtype = np.uint8)
-        #l=len(self.fitness_list)
-        #div=l*l
+        #arrsum=np.sum(tempFitness, dtype = np.uint8)
+        l=len(self.fitness_list)
+        div=l*l
         for i in range(len(self.Pscript)):
            id=self.Pscript[i].getId()
            X.append(id)
-           win=int(self.fitness_list[i]/arrsum)
+           win=int(self.fitness_list[i]/div)
            Y.append(win)
         #plt.plot(X, Yavg, color='green', linestyle='dashed', linewidth = 3, 
          #marker='o', markerfacecolor='blue', markersize=12)
