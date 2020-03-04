@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 class EvolutionaryAlgorithm:
     def __init__(self):
          #Total No of  Script to generate automatically
-        self.pop_n=10 # Total no of script from Population z
+        self.pop_n=20 # Total no of script from Population z
         self.e=5 #best 4 script
         self.t=5
         self.genL=3
@@ -86,6 +86,7 @@ class EvolutionaryAlgorithm:
             self.Pscript=pdashscripts
         self.evaluate()
         self.getLargestFitness()
+
 
 
     def generate_scriptInstance(self,id):
@@ -169,9 +170,9 @@ class EvolutionaryAlgorithm:
 
         self.fitness_list=np.subtract(self.victories_list,self.loss_list)
         print("Fitness Result " + str(self.fitness_list))
-        #self.plotgraph()  
-        self.clearpycache()
+        self.plotgraph()  
         self.remove_unused_rules()
+        self.clearpycache()
         for i in range(len(self.Pscript)):
             self.Pscript[i].saveFile('/Users/maithrreye/Winter2020/XAI/cant-stop-assignment/players/scripts/__pycache__/')  
         for i in range(len(self.P)):
@@ -260,12 +261,15 @@ class EvolutionaryAlgorithm:
         return str2
 
     def getLargestFitness(self):
+        rule=[]
+        X=[]
+        Y=[]
         flist=self.fitness_list.tolist()
         p=sorted(range(len(flist)), key = lambda sub: flist[sub],reverse=True)[:1]
+        index=p[0]
         id=self.Pscript[p[0]].getId()
         print("The highest fitness script is......" + "Script" +str(id) + "with Fitness value " +str(flist[p[0]]))
-
-
+        
     def remove_unused_rules(self):
         new_rules = []
         rules=[]
@@ -310,11 +314,14 @@ class EvolutionaryAlgorithm:
         for i in range(len(self.Pscript)):
            id=self.Pscript[i].getId()
            X.append(id)
-           win=int(self.fitness_list[i]/div)
-           Y.append(win)
-        #plt.plot(X, Yavg, color='green', linestyle='dashed', linewidth = 3, 
-         #marker='o', markerfacecolor='blue', markersize=12)
-        plt.xticks(np.arange(0, 60, 2))
+           #win=int(self.fitness_list[i]/div)
+           win=int(self.victories_list[i])
+           tot=int(self.victories_list[i]+self.loss_list[i])
+           a=win/tot
+           Y.append(a)
+           #Y.append(win)
+        plt.plot(X, Y)
+        #plt.xticks(np.arange(0, 60, 2))
         #plt.yticks(np.arange(-10,50,5))  
         plt.plot(X,Y)
         plt.xlabel('Script IDs') 
